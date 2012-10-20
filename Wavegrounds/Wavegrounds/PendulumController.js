@@ -162,8 +162,7 @@ M.Controller = new (function ()
 			$(elem).parent().find('.ControlHandle').mousedown(function ()
 			{
 				Ctrl.ActiveController = id;
-				$('#Control input').css('-moz-user-select', '-moz-none');
-				$('#Control input').css('-webkit-user-select', 'none');
+				$('#Control input').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
 			});
 		}
 

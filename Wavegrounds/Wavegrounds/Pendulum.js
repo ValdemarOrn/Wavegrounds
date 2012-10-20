@@ -16,61 +16,61 @@ M.ConfigInfo =
 	BackgroundColor:    { def: "#FFFFFF",min: "",            max: "",           type: 'color',      scale: 0,      precision: 0 },
 	LineColor:          { def: "#000000",min: "",            max: "",           type: 'color',      scale: 0,      precision: 0 },
 	LineOpacity:        { def: 200,      min: 0,             max: 255,          type: 'limit',      scale: 1,      precision: 0 },
-	LineThickness:      { def: 0.4,      min: 0.01,          max: 30,           type: 'limit',      scale: 0.05,   precision: 2 },
+	LineThickness:      { def: 0.4,      min: 0.01,          max: 30,           type: 'limit',      scale: 0.1,    precision: 2 },
 	
-	Precision:          { def: 300,      min: 100,           max: 5000,         type: 'limit',      scale: 50,     precision: 0 },
+	Precision:          { def: 300,      min: 100,           max: 5000,         type: 'limit',      scale: 20,     precision: 0 },
 
-	StartTime:          { def: 0,        min: -10,           max: 100,          type: 'limit',      scale: 0.05,   precision: 3 },
-	SimulationTime:     { def: 100,      min: 0,             max: 1000,         type: 'explimit',   scale: 0.01,   precision: 3 },
+	StartTime:          { def: 0,        min: -10,           max: 100,          type: 'limit',      scale: 0.1,    precision: 3 },
+	SimulationTime:     { def: 100,      min: 0,             max: 1000,         type: 'explimit',   scale: 0.02,   precision: 3 },
 	
 	XSize:              { def: 0.8,      min: 0.1,           max: 10,           type: 'explimit',   scale: 0.02,   precision: 2 },
 	YSize:              { def: 0.5,      min: 0.1,           max: 10,           type: 'explimit',   scale: 0.02,   precision: 2 },
-	XSwingPhase:        { def: 0.0,      min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 2 },
-	YSwingPhase:        { def: 0.0,      min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 2 },
+	XSwingPhase:        { def: 0.0,      min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 2 },
+	YSwingPhase:        { def: 0.0,      min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 2 },
 	
 	XSwingSpeed:        { def: 1,        min: 0,             max: 100,          type: 'explimit',   scale: 0.01,   precision: 5 },
 	YSwingSpeed:        { def: 1,        min: 0,             max: 100,          type: 'explimit',   scale: 0.01,   precision: 5 },
 	
-	XPModulation:       { def: 0.0,      min: 0,             max: 10,           type: 'limit',      scale: 0.01,   precision: 3 },
-	YPModulation:       { def: 0.0,      min: 0,             max: 10,           type: 'limit',      scale: 0.01,   precision: 3 },
+	XPModulation:       { def: 0.0,      min: 0,             max: 10,           type: 'limit',      scale: 0.04,   precision: 3 },
+	YPModulation:       { def: 0.0,      min: 0,             max: 10,           type: 'limit',      scale: 0.04,   precision: 3 },
 	XPModulationSpeed:  { def: 0.001,    min: 0,             max: 0.1,          type: 'explimit',   scale: 0.01,   precision: 4 },
 	YPModulationSpeed:  { def: 0.001,    min: 0,             max: 0.1,          type: 'explimit',   scale: 0.01,   precision: 4 },
-	XPModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 4 },
-	YPModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 4 },
+	XPModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 4 },
+	YPModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 4 },
 	
 	XAModulation:       { def: 0.0,      min: 0,             max: 1,            type: 'limit',      scale: 0.002,  precision: 3 },
 	YAModulation:       { def: 0.0,      min: 0,             max: 1,            type: 'limit',      scale: 0.002,  precision: 3 },
-	XAModulationSpeed:  { def: 0.001,    min: 0,             max: 100,          type: 'explimit',   scale: 0.01,   precision: 4 },
-	YAModulationSpeed:  { def: 0.001,    min: 0,             max: 100,          type: 'explimit',   scale: 0.01,   precision: 4 },
-	XAModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 4 },
-	YAModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 4 },
+	XAModulationSpeed:  { def: 0.001,    min: 0,             max: 100,          type: 'explimit',   scale: 0.04,   precision: 4 },
+	YAModulationSpeed:  { def: 0.001,    min: 0,             max: 100,          type: 'explimit',   scale: 0.04,   precision: 4 },
+	XAModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 4 },
+	YAModulationPhase:  { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 4 },
 
-	XDecayRate:         { def: 0.00001,  min: 0,             max: 1,            type: 'explimit',   scale: 0.01,   precision: 4 },
-	YDecayRate:         { def: 0.00001,  min: 0,             max: 1,            type: 'explimit',   scale: 0.01,   precision: 4 },
+	XDecayRate:         { def: 0.00001,  min: 0,             max: 1,            type: 'explimit',   scale: 0.02,   precision: 4 },
+	YDecayRate:         { def: 0.00001,  min: 0,             max: 1,            type: 'explimit',   scale: 0.02,   precision: 4 },
 	
-	RotationSpeed:      { def: 0.004,    min: -3,            max: 3,            type: 'limit',      scale: 0.002,  precision: 3 },
-	RotationPhase:      { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 4 },
+	RotationSpeed:      { def: 0.004,    min: -3,            max: 3,            type: 'limit',      scale: 0.002,  precision: 5 },
+	RotationPhase:      { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 4 },
 	
 	RotationMod:        { def: 0.0,      min: 0,             max: 1,            type: 'limit',      scale: 0.002,  precision: 3 },
-	RotationModSpeed:   { def: 0.00001,  min: 0,             max: 100,          type: 'explimit',   scale: 0.01,   precision: 4 },
-	RotationModPhase:   { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.02,   precision: 4 },
+	RotationModSpeed:   { def: 0.00001,  min: 0,             max: 100,          type: 'explimit',   scale: 0.04,   precision: 4 },
+	RotationModPhase:   { def: 0,        min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.04,   precision: 4 },
 	
 	PlaneAngleX:        { def: 0.0,      min: -Math.PI / 2,  max: Math.PI / 2,  type: 'limit',      scale: 0.02,   precision: 4 },
 	PlaneAngleY:        { def: 0.0,      min: -Math.PI / 2,  max: Math.PI / 2,  type: 'limit',      scale: 0.02,   precision: 4 },
-	PlaneHeight:        { def: 300,      min: 10,            max: 10000,        type: 'limit',      scale: 10,     precision: 0 },
+	PlaneHeight:        { def: 300,      min: 10,            max: 10000,        type: 'limit',      scale: 40,     precision: 0 },
 
 	PanX:               { def: 0.0,      min: -1.0,          max: 1.0,          type: 'limit',      scale: 0.005,  precision: 3 },
 	PanY:               { def: 0.0,      min: -1.0,          max: 1.0,          type: 'limit',      scale: 0.005,  precision: 3 },
 	Zoom:               { def: 1.0,      min: 0.01,          max: 10000.0,      type: 'explimit',   scale: 0.01,   precision: 4 },
 	Rotate:             { def: 0.0,      min: -Math.PI,      max: Math.PI,      type: 'limit',      scale: 0.01,   precision: 3 },
 	
-	LineSpeedMin:       { def: 0.0,      min: 0.001,         max: 1.0,          type: 'explimit',   scale: 0.01,   precision: 4 },
+	LineSpeedMin:       { def: 0.0,      min: 0.001,         max: 1.0,          type: 'explimit',   scale: 0.02,   precision: 4 },
 	LineSpeedDecay:     { def: 0.1,      min: 0.01,          max: 1,            type: 'explimit',   scale: 0.01,   precision: 3 },
 	LineSpeedColor:     { def: "#000000",min: "",            max: "",           type: 'color',      scale: 0,      precision: 0 },
 	LineSpeedOpacity:   { def: 1.0,      min: 0.0,           max: 10,           type: 'explimit',   scale: 0.02,   precision: 3 },
 	LineSpeedThickness: { def: 1.0,      min: 0.0,           max: 10,           type: 'explimit',   scale: 0.02,   precision: 3 },
 
-	LineTimeMin:        { def: 0.0,      min: 0.0,           max: 100,          type: 'explimit',   scale: 0.01,   precision: 3 },
+	LineTimeMin:        { def: 0.0,      min: 0.0,           max: 100,          type: 'explimit',   scale: 0.02,   precision: 3 },
 	LineTimeDecay:      { def: 0.1,      min: 0.01,          max: 1,            type: 'explimit',   scale: 0.01,   precision: 3 },
 	LineTimeColor:      { def: "#000000",min: "",            max: "",           type: 'color',      scale: 0,      precision: 0 },
 	LineTimeOpacity:    { def: 1.0,      min: 0.0,           max: 10,           type: 'explimit',   scale: 0.02,   precision: 3 },
@@ -520,8 +520,21 @@ M.Main = function (canvas)
 		this.Context.fill();
 	}
 
+	// Draw every other point, since bezier uses 4 points
+	var drawing = true;
+
 	this.DrawBezier = function (t)
 	{
+		if (drawing === false)
+		{
+			drawing = true;
+			return;
+		}
+		else
+		{
+			drawing = false;
+		}
+
 		var p0 = this.Points[0];
 		var p1 = this.Points[1];
 		var p2 = this.Points[2];

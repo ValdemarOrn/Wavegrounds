@@ -16,10 +16,17 @@ $(document).ready(function ()
 		return;
 
 	var lastMousePos = null;
+	var shiftPressed = false;
 
 	// event that occurs when tweaking the sliders
 	function UpdateMouseControl(id, dx, dy)
 	{
+		if (shiftPressed)
+		{
+			dx = dx / 5;
+			dy = dy / 5;
+		}
+
 		if (id === 'Canvas')
 		{
 			Ctrl.PanCanvas(dx, dy);
@@ -67,10 +74,9 @@ $(document).ready(function ()
 
 	$(window).mouseup(function ()
 	{
-		console.log('mouse up, active was ' + Ctrl.ActiveController);
+		Logger('mouse up, selected was: ' + Ctrl.ActiveController);
 		Ctrl.ActiveController = null;
-		$('#Control input').css('-moz-user-select', 'text');
-		$('#Control input').css('-webkit-user-select', 'text');
+		$('#Control input').attr('unselectable', 'off').css('-moz-user-select', 'text').css('-webkit-user-select', 'text');
 	});
 
 	$(window).mousemove(function (event)
@@ -85,9 +91,22 @@ $(document).ready(function ()
 		var dy = event.pageY - lastMousePos[1];
 
 		lastMousePos = [event.pageX, event.pageY];
-		console.log('move: ' + lastMousePos[0] + ', ' + lastMousePos[1]);
 
 		UpdateMouseControl(Ctrl.ActiveController, dx, dy);
+	});
+
+	$(window).keydown(function (ev)
+	{
+		if (ev.which === 16)
+			shiftPressed = true;
+		else
+			shiftPressed = false;
+	});
+
+	$(window).keyup(function (ev)
+	{
+		if (ev.which === 16)
+			shiftPressed = false;
 	});
 
 	$(window).resize(function ()
@@ -114,8 +133,7 @@ $(document).ready(function ()
 	$('#Canvas').mousedown(function ()
 	{
 		Ctrl.ActiveController = 'Canvas';
-		$('#Control input').css('-moz-user-select', '-moz-none');
-		$('#Control input').css('-webkit-user-select', 'none');
+		$('#Control input').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
 	});
 
 	$('#Canvas').mousewheel(function (event, delta, deltaX, deltaY)
@@ -182,5 +200,24 @@ $(document).ready(function ()
 
 	Ctrl.SetDefaults();
 	
+	// Make things unselectable
+	$(window).attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$(document).attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('body').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('#Menu').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('#ControlContainer').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('#Control').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('.ConfigBlock').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('#Control input').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
+	$('#Control div').attr('unselectable', 'on').css('-moz-user-select', '-moz-none').css('-webkit-user-select', 'none');
 });
 
+function Logger(text)
+{
+	var elem = $('#Logger')[0];
+	if (typeof elem === "undefined")
+		return;
+
+	$('#Logger').append(text + '<br/>');
+	$('#Logger').scrollTop(elem.scrollHeight);
+}
