@@ -55,7 +55,7 @@ namespace Wavegrounds.Controllers
 				if(e.InnerException != null)
 					msg += " - " + e.InnerException.Message;
 
-				return Json(new { Status = "Failed", Message = msg });
+				return Json(new { Status = "Failed", Message = "An unexpected error occured" });
 			}
 		}
 
