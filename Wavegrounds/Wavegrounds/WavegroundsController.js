@@ -408,6 +408,7 @@ M.Controller = new (function ()
 	this.PostSketch = function ()
 	{
 		var ser = this.GetSerialized();
+		$('#ImageUrl').val('Saving image...');
 
 		$.ajax(
 		{
@@ -427,7 +428,7 @@ M.Controller = new (function ()
 				var fblink = '<div class="fb-like" data-href="http://www.google.com" data-send="false" data-width="450" data-show-faces="false" data-font="arial"></div>';
 				$('#ImageUrl').val(link);
 				$('#ShareTwitter a').prop('href', twitterLink);
-				$('#ShareFacebook').html(fblink);
+				//$('#ShareFacebook').html(fblink);
 				//$('#ImageShareResults').animate({ height: 240 }, 150);
 				//$('#ImageShareSave').animate({ height: 0 }, 150);
 

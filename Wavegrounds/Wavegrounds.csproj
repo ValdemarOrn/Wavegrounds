@@ -172,6 +172,8 @@
     <Content Include="Wavegrounds\jquery.mCustomScrollbar.css" />
     <Content Include="Wavegrounds\jquery.mCustomScrollbar.js" />
     <Content Include="Wavegrounds\jquery.mousewheel.min.js" />
+    <Content Include="Wavegrounds\og.jpg" />
+    <Content Include="Wavegrounds\tweet.png" />
     <Content Include="Wavegrounds\Wavegrounds.js" />
     <Content Include="Wavegrounds\WavegroundsControl.js" />
     <Content Include="Wavegrounds\WavegroundsController.js" />
