@@ -428,8 +428,8 @@ M.Controller = new (function ()
 				$('#ImageUrl').val(link);
 				$('#ShareTwitter a').prop('href', twitterLink);
 				$('#ShareFacebook').html(fblink);
-				$('#ImageShareResults').animate({ height: 240 }, 150);
-				$('#ImageShareSave').animate({ height: 0 }, 150);
+				//$('#ImageShareResults').animate({ height: 240 }, 150);
+				//$('#ImageShareSave').animate({ height: 0 }, 150);
 
 			}
 		});

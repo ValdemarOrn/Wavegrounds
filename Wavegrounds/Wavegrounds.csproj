@@ -177,7 +177,6 @@
     <Content Include="Wavegrounds\WavegroundsController.js" />
     <Content Include="Wavegrounds\WavegroundsStyles.css">
       <DependentUpon>WavegroundsStyles.less</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
