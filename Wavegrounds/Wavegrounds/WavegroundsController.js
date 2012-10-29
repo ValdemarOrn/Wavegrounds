@@ -1,6 +1,6 @@
 ﻿/// <reference path="jquery-1.7.1.intellisense.js"/>
 /// <reference path="jquery-1.7.1.js" />
-/// <reference path="Pendulum.js" />
+/// <reference path="Wavegrounds.js" />
 /// <reference path="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js" />
 
 // Controller
@@ -10,8 +10,8 @@ if (typeof M === "undefined")
 
 M.Controller = new (function ()
 {
-	var BaseAddress = 'http://www.google.com/';
-	var ServerAddress = 'http://localhost/Wavegrounds/Sketch/';
+	this.BaseAddress = ''; //'http://localhost:8005/';
+	this.ServerAddress = ''; //'http://localhost:8005/Sketch/';
 
 	var Ctrl = this;
 
@@ -26,7 +26,7 @@ M.Controller = new (function ()
 
 		if (browser == 'explorer' && version < 9)
 		{
-			alert('Your browser it too old.\nInternet Explorer 8 and below are not supported.\nYou should most definitely upgrade your browser!');
+			alert('Your browser is too old.\nInternet Explorer 8 and below are not supported.\nYou should most definitely upgrade your browser!');
 			return true;
 		}
 
@@ -55,6 +55,14 @@ M.Controller = new (function ()
 		var unsupported = this.DetectBrowser();
 		if (unsupported)
 			return false;
+
+		var link = document.URL;
+		if (link.indexOf('?') > 0)
+			link = link.substring(0, link.indexOf('?'));
+
+		this.BaseAddress = link;
+		this.ServerAddress = link + '/Sketch/'
+		this.ServerAddress = this.ServerAddress.replace('//Sketch', '/Sketch');
 
 		var canvas = document.getElementById("Canvas");
 		var m = new M.Main(canvas);
@@ -369,6 +377,8 @@ M.Controller = new (function ()
 
 	this.EventGetImage = function ()
 	{
+		$('#ImageCodeJson').val(this.GetSerialized());
+
 		var dataURL = document.getElementById("Canvas").toDataURL();
 		document.getElementById("ImageOutput").src = dataURL;
 		this.ShowDialog("GetImageDialog");
@@ -376,13 +386,14 @@ M.Controller = new (function ()
 
 	this.EventSaveShare = function ()
 	{
-		$('#ImageShareResults').css('height', '0px');
-		$('#ImageShareSave').css('height', 120);
+		//$('#ImageShareResults').css('height', '0px');
+		//$('#ImageShareSave').css('height', 120);
 
 		Ctrl.ShowDialog("SaveShareDialog");
+		Ctrl.PostSketch();
 	}
 
-	this.PostSketch = function ()
+	this.GetSerialized = function ()
 	{
 		var sketch = this.Instance.GetData();
 		sketch.Config = JSON.stringify(sketch.Config);
@@ -391,10 +402,16 @@ M.Controller = new (function ()
 		sketch.Public = $('#SharePublic').prop('checked');
 
 		var ser = JSON.stringify(sketch);
+		return ser;
+	}
+
+	this.PostSketch = function ()
+	{
+		var ser = this.GetSerialized();
 
 		$.ajax(
 		{
-			url: ServerAddress + 'Save',
+			url: Ctrl.ServerAddress + 'Save',
 			type: "POST",
 			data: ser,
 			contentType: "application/json; charset=utf-8",
@@ -402,16 +419,16 @@ M.Controller = new (function ()
 			success: function (data)
 			{
 				if(data.Status !== 'OK')
-					var link = 'An error occured while trying to save the image';
+					var link = data.Message;
 				else
-					var link = BaseAddress + '?ref=' + data.Ref;
+					var link = Ctrl.BaseAddress + '?ref=' + data.Ref;
 				
 				var twitterLink = 'https://twitter.com/intent/tweet?hashtags=Wavegrounds&text=My image:&url=' + encodeURIComponent(link);
 				var fblink = '<div class="fb-like" data-href="http://www.google.com" data-send="false" data-width="450" data-show-faces="false" data-font="arial"></div>';
 				$('#ImageUrl').val(link);
 				$('#ShareTwitter a').prop('href', twitterLink);
 				$('#ShareFacebook').html(fblink);
-				$('#ImageShareResults').animate({ height: 200 }, 150);
+				$('#ImageShareResults').animate({ height: 240 }, 150);
 				$('#ImageShareSave').animate({ height: 0 }, 150);
 
 			}
@@ -422,7 +439,7 @@ M.Controller = new (function ()
 	{
 		$.ajax(
 		{
-			url: ServerAddress + 'Load/' + ref,
+			url: Ctrl.ServerAddress + 'Load/' + ref,
 			type: "GET",
 			dataType: "json",
 			error: function()
@@ -457,6 +474,23 @@ M.Controller = new (function ()
 		this.RefreshSettings();
 	}
 
+	this.EventRestoreImage = function ()
+	{
+		this.ShowDialog("RestoreImageDialog");
+	}
+
+	this.Restore = function ()
+	{
+		var text = $('#RestoreImageCodeJson').val();
+		var data = JSON.parse(text);
+
+		var sketch = {};
+		sketch.Version = data.Version;
+		sketch.Config = JSON.parse(data.Config);
+		sketch.Settings = JSON.parse(data.Settings);
+		Ctrl.LoadSketch(sketch);
+	}
+
 	this.EventInstructions = function ()
 	{
 		this.ShowDialog("InstructionsDialog");
@@ -464,6 +498,8 @@ M.Controller = new (function ()
 
 	this.EventAbout = function ()
 	{
+		var val = 'Version ' + M.VersionInfo;
+		$('#VersionString').html(val);
 		this.ShowDialog("AboutDialog");
 	}
 

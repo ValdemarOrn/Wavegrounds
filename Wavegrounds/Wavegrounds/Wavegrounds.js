@@ -59,6 +59,9 @@ M.ConfigInfo =
 	PlaneAngleY:        { def: 0.0,      min: -Math.PI / 2,  max: Math.PI / 2,  type: 'limit',      scale: 0.02,   precision: 4 },
 	PlaneHeight:        { def: 300,      min: 10,            max: 10000,        type: 'limit',      scale: 40,     precision: 0 },
 
+	Pinch:              { def: 1.0,      min: 0.1,           max: 10.0,         type: 'explimit',   scale: 0.02,   precision: 4 },
+	PinchHorizon:       { def: 0.3,      min: 0.01,          max: 5.0,          type: 'limit',      scale: 0.02,   precision: 4 },
+
 	PanX:               { def: 0.0,      min: -1.0,          max: 1.0,          type: 'limit',      scale: 0.005,  precision: 3 },
 	PanY:               { def: 0.0,      min: -1.0,          max: 1.0,          type: 'limit',      scale: 0.005,  precision: 3 },
 	Zoom:               { def: 1.0,      min: 0.01,          max: 10000.0,      type: 'explimit',   scale: 0.01,   precision: 4 },
@@ -135,6 +138,9 @@ M.Labels =
 	PlaneAngleX: "Plane Angle X-Axis",
 	PlaneAngleY: "Plane Angle Y-Axis",
 	PlaneHeight: "Plane Height",
+
+	Pinch: "Pinch Amount",
+	PinchHorizon: "Pinch Horizon Radius",
 
 	PanX: "Pan X-Axis",
 	PanY: "Pan Y-Axis",
@@ -251,6 +257,10 @@ M.Main = function (canvas)
 		PlaneAngleY: 0.0,
 		PlaneHeight: 300,
 
+		// Pinch Effect
+		Pinch: 0.0,
+		PinchHorizon: 0.3,
+
 		// Move the origin point around on the canvas
 		PanX: 0,
 		PanY: 0,
@@ -293,6 +303,7 @@ M.Main = function (canvas)
 		RotationEnabled: true,
 		RotationModEnabled: false,
 		PlaneAngleEnabled: false,
+		PinchEnabled: false,
 		LineSpeedStyleEnabled: false,
 		LineTimeStyleEnabled: false
 	}
@@ -397,6 +408,19 @@ M.Main = function (canvas)
 				var rotated = rotatePoint(x, y, rotateAngle);
 				x = rotated[0];
 				y = rotated[1];
+			}
+
+			if (settings.PinchEnabled)
+			{
+				var radPx = cfg.PinchHorizon * this.Width;
+
+				var len = Math.sqrt(x*x + y*y);
+				var adjLen = Math.pow(len / radPx, cfg.Pinch) * radPx;
+
+				var factor = adjLen / len;
+
+				x = x * factor;
+				y = y * factor;
 			}
 
 			// plane transformation

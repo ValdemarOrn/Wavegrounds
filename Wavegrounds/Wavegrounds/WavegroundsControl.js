@@ -1,7 +1,7 @@
 ﻿/// <reference path="jquery-1.7.1.intellisense.js"/>
 /// <reference path="jquery-1.7.1.js" />
-/// <reference path="Pendulum.js" />
-/// <reference path="PendulumController.js" />
+/// <reference path="Wavegrounds.js" />
+/// <reference path="WavegroundsController.js" />
 /// <reference path="jquery.mousewheel.min.js" />
 
 $(document).ready(function ()
@@ -145,6 +145,21 @@ $(document).ready(function ()
 	$('#GetImage').click(function ()
 	{
 		Ctrl.EventGetImage();
+	});
+
+	$('#ImageCodeJson').click(function ()
+	{
+		$(this).select();
+	});
+
+	$('#RestoreImage').click(function ()
+	{
+		Ctrl.EventRestoreImage();
+	});
+
+	$('#RestoreButton').click(function ()
+	{
+		Ctrl.Restore();
 	});
 
 	// Open Save & Share dialog

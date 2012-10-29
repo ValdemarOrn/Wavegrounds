@@ -8,8 +8,16 @@ namespace Wavegrounds
 {
 	public class Context : DbContext
 	{
+		public static string ConnString;
+
+		static Context()
+		{
+			ConnString = "data source=" + HttpContext.Current.Server.MapPath("~") + "\\Content\\test.db";
+		}
+
 		public Context() : base(@"SqliteConn")
 		{
+			this.Database.Connection.ConnectionString = ConnString;
 			Database.SetInitializer<Context>(null);
 		}
 

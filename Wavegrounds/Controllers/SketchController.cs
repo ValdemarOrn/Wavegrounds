@@ -8,45 +8,55 @@ namespace Wavegrounds.Controllers
 {
 	public class SketchController : Controller
 	{
-		//
-		// GET: /Wavegrounds/
-
 		public ActionResult Index()
 		{
-			return View();
+			string path = Server.MapPath("~/Wavegrounds.html");
+			string content = System.IO.File.ReadAllText(path);
+			return Content(content);
 		}
 
 		[HttpPost]
 		public ActionResult Save(Sketch sketch)
 		{
-			if(String.IsNullOrEmpty(sketch.Config) || String.IsNullOrEmpty(sketch.Settings) || String.IsNullOrEmpty(sketch.Version))
-				return Json(new { Status = "Failed", Message = "Required Fields are missing. Required Fields are config, Settings, Version and Public" });
-
-			if(sketch.Config.Length > 8000 || sketch.Settings.Length > 2000 || sketch.Version.Length > 20)
-				return Json(new { Status = "Failed", Message = "Too much data" });
-
-			var ctx = new Context();
-			var maxID = 0;
-			if (ctx.Sketches.Count() > 0)
-				maxID = (int)ctx.Sketches.Max(x => x.Id);
-
-			for (int i = 0; i < 10; i++)
+			try
 			{
-				string reference = MakeReference(maxID);
+				if (String.IsNullOrEmpty(sketch.Config) || String.IsNullOrEmpty(sketch.Settings) || String.IsNullOrEmpty(sketch.Version))
+					return Json(new { Status = "Failed", Message = "Required Fields are missing. Required Fields are config, Settings, Version and Public" });
 
-				// check if already exists
-				if(ctx.Sketches.Any(x => x.Ref == reference))
-					continue;
+				if (sketch.Config.Length > 8000 || sketch.Settings.Length > 2000 || sketch.Version.Length > 20)
+					return Json(new { Status = "Failed", Message = "Too much data" });
 
-				sketch.Timestamp = DateTime.Now;
-				sketch.Ref = reference;
-				ctx.Sketches.Add(sketch); 
-				ctx.SaveChanges();
+				var ctx = new Context();
+				var maxID = 0;
+				if (ctx.Sketches.Count() > 0)
+					maxID = (int)ctx.Sketches.Max(x => x.Id);
 
-				return Json(new { Status = "OK", Ref = reference });
+				for (int i = 0; i < 10; i++)
+				{
+					string reference = MakeReference(maxID);
+
+					// check if already exists
+					if (ctx.Sketches.Any(x => x.Ref == reference))
+						continue;
+
+					sketch.Timestamp = DateTime.Now;
+					sketch.Ref = reference;
+					ctx.Sketches.Add(sketch);
+					ctx.SaveChanges();
+
+					return Json(new { Status = "OK", Ref = reference });
+				}
+
+				return Json(new { Status = "Failed", Message = "Failed to generate reference key" });
 			}
-			
-			return Json(new { Status = "Failed", Ref = "" });
+			catch (Exception e)
+			{
+				string msg = e.Message;
+				if(e.InnerException != null)
+					msg += " - " + e.InnerException.Message;
+
+				return Json(new { Status = "Failed", Message = msg });
+			}
 		}
 
 		[HttpGet]

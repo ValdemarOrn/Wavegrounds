@@ -3,11 +3,11 @@
 
 <head>
 
-	<title>Pendulus - Javascript, Canvas, HTML5 Demo</title>
+	<title>Wavegrounds - Art From Mathematics</title>
 	<meta name="description" content="HTML5 canvas demo written in Javascript.">
 	<meta name="keywords" content="html5, canvas, javascript, demo">
 	
-	<link href="Wavegrounds/PendulumStyles.css" rel="stylesheet" type="text/css">
+	<link href="Wavegrounds/WavegroundsStyles.css" rel="stylesheet" type="text/css">
 	<link href="Wavegrounds/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -18,9 +18,9 @@
 	<script type="text/javascript" src="Wavegrounds/jquery.mCustomScrollbar.js"></script>
 	<script type="text/javascript" src="Wavegrounds/BrowserDetect.js"></script>
 
-	<script type="text/javascript" src="Wavegrounds/Pendulum.js"></script>
-	<script type="text/javascript" src="Wavegrounds/PendulumController.js"></script>
-	<script type="text/javascript" src="Wavegrounds/PendulumControl.js"></script>
+	<script type="text/javascript" src="Wavegrounds/Wavegrounds.js"></script>
+	<script type="text/javascript" src="Wavegrounds/WavegroundsController.js"></script>
+	<script type="text/javascript" src="Wavegrounds/WavegroundsControl.js"></script>
 	
 </head>
 
@@ -28,10 +28,11 @@
 
 	<!--<div id="Logger" style="width: 400px; height: 600px; position: absolute; right: 0px; top: 50px; border: 1px solid red; z-index: 1999; background: white; overflow: scroll;"></div>-->
 	<div id="Menu">
-		<a href="#" id="GetImage">Get Image</a>
-		<a href="#" id="SaveShare">Save & Share</a>
-		<a href="#" id="Instructions">Instructions</a>
-		<a href="#" id="About">About</a>
+		<a href="#" id="GetImage" onclick="return false;">Get Image</a>
+		<a href="#" id="RestoreImage" onclick="return false;">Restore Image</a>
+		<a href="#" id="SaveShare" onclick="return false;">Save & Share</a>
+		<a href="#" id="Instructions" onclick="return false;">Instructions</a>
+		<a href="#" id="About" onclick="return false;">About</a>
 	</div>
 
 	<div id="ControlContainer">
@@ -116,6 +117,12 @@
 				</div>
 
 				<div class="ConfigBlock">
+					<h2 class="Settings" id="PinchEnabled">Pinch</h2>
+					<div><input type="text" id="Pinch" class="Controller" /></div>
+					<div><input type="text" id="PinchHorizon" class="Controller" /></div>
+				</div>
+
+				<div class="ConfigBlock">
 					<h2 class="Settings" id="LineSpeedStyleEnabled">Line Style By Speed</h2>
 					<div><input type="text" id="LineSpeedMin" class="Controller" /></div>
 					<div><input type="text" id="LineSpeedDecay" class="Controller" /></div>
@@ -161,7 +168,15 @@
 
 			<h1>Download Image</h1>
 
-			<div>
+			<div id="Div1">
+				<h3>Image code:</h3>
+				<ul>
+					<li>Save this text in a safe place. You can use it to restore your image at any time.</li>
+				</ul>
+				<input type="text" id="ImageCodeJson" style="width: 400px; margin-left: 3em;" /><br />
+			</div>
+
+			<div id="ImagePng">
 				<h3>To download high-resolution image:</h3>
 				<ul class="Chrome">
 					<li>Right click the image and choose "Save image as"</li>
@@ -195,6 +210,24 @@
 
 		</div>
 
+		<!-- Restore Image Dialog -->
+		<div id="RestoreImageDialog" class="Dialog">
+
+			<h1>Restore Image</h1>
+
+			<div>
+				<h3>Image code:</h3>
+				<ul>
+					<li>Paste your code into the box below:</li>
+				</ul>
+				<div style="text-align: center;">
+					<textarea id="RestoreImageCodeJson" style="width: 400px; height: 150px;"></textarea><br />
+					<div class="Button" id="RestoreButton" style="margin-top: 15px;">Restore</div>
+				</div>
+			</div>
+
+		</div>
+
 		<!-- Save % Share Dialog -->
 		<div id="SaveShareDialog" class="Dialog">
 
@@ -204,20 +237,21 @@
 
 				
 
-				<div id="ImageShareSave">
+				<!--<div id="ImageShareSave">
 					<div class="Button" id="SaveImage" style="margin-bottom: 10px;">Save</div><br />
-					<input type="checkbox" id="SharePublic" checked="checked" /> Make this image public
+					<input type="checkbox" id="SharePublic" style="display: none;"/> Make this image public
 					<ul>
 						<li>Public images are used as default settings when you load the application.</li>
 					</ul>
-				</div>
+				</div>-->
 
 				<div id="ImageShareResults">
 					<h3>Image Url:</h3>
 					<input type="text" id="ImageUrl" style="width: 400px;" /><br />
 					<ul>
 						<li>Use this link to restore your image.</li>
-						<li>Images are stored for a minimum of 90 days from the time they were last loaded.</li>
+						<li>Images are stored for a minimum of 1 year from the time they were saved.</li>
+						<li>Please not that I can not and will not be held legally responsible for the safe keeping of images!</li>
 						<li>You can also send it to your friends on Facebook and Twitter:</li>
 					</ul>
 					
@@ -241,7 +275,21 @@
 			<h1>Instructions</h1>
 
 			<div>
-				<h3>Coming soon...</h3>
+				<h3>Zoom & Pan</h3>
+				<div>
+					You can left click the image and hold down the left mouse button to pan.<br />
+					Use the mouse wheel to zoom in and out. You can also use the settings in the editor to zoom and pan
+				</div>
+				<h3>Settings</h3>
+				<div>
+					Hold down the Shift key to fine-tune the settings.<br />
+					Some settings have an exponential scale, a small change in value may cause a large change in the image.
+				</div>
+				<h3>Storing Images</h3>
+				<div>
+					You can save your image as a file by selecting Get Image.<br />
+					You can also create a link to your image and send it to your friends by selecting Save & Share.
+				</div>
 			</div>
 
 		</div>
@@ -252,9 +300,11 @@
 			<h1>About Wavegrounds</h1>
 
 			<div>
+				<h3 id="VersionString">Version </h3>
 				<h3>Created by Valdemar Erlingsson</h3>
-				<h3><a href="http://valdemarorn.github.com">My Github Page</a></h3>
-				<h3><a href="mailto:valdiorn@gmail.com">My Email</a></h3>
+				
+				<h3><a href="http://www.analogwindow.com">My Website</a></h3>
+				<h3><a href="http://www.github.com/valdemarorn">My Github</a></h3>
 				Wavegrounds is free and open source software. You can use it any way you want.
 				The images created by Wavegrounds are your property and you have full permission
 				to do anything you like with them.
